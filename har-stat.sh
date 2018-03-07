@@ -1,6 +1,13 @@
 #!/bin/bash
 
+set -e
+
 IN=$1
+
+if [ ! -f ${IN} ]; then
+    echo "Usage: har-stat <INPUT_FILE>"
+    exit 1
+fi
 
 echo Processing HAR file ${IN}
 
