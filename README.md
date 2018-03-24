@@ -1,5 +1,13 @@
 # har-jq-cheatsheet
-Cheat sheet for extracting information from HAR files using JQ
+Cheat sheet for extracting information from [HAR](https://en.wikipedia.org/wiki/.har) files using [JQ](https://stedolan.github.io/jq/).
+
+HAR is "HTTP Archive" that contains detailed information about requests and responses.
+
+To get HAR file: 
+* Open Google Chrome Dev Tools on the page (F12)
+* Go to "Network Tab"
+* Right click -> Copy -> Copy all as HAR
+* Paste into a new JSON fil.
 
 * Listing all images with size and times
 ```jq
@@ -15,7 +23,7 @@ Cheat sheet for extracting information from HAR files using JQ
   select(.request.url | match("png|jpg|PNG|JPG|jpeg|JPEG"))
 ] | length
 ```
-* Count total time for all loaded images INCLUDING queueing
+* Count total time for all loaded images *including* queueing
 ```jq
 [
   .log.entries[] | 
@@ -25,7 +33,7 @@ Cheat sheet for extracting information from HAR files using JQ
 ] | reduce(.[]) as $i (0; . += $i.time)
 ```
 
-* Count total time for all loaded images WITHOUT queueing
+* Count total time for all loaded images *without* queueing
 ```jq
 [
   .log.entries[] |
