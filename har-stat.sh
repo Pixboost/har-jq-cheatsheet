@@ -11,6 +11,9 @@ fi
 
 echo Processing HAR file ${IN}
 
+ALL_IMAGES=$(jq '.log.entries[] |select(.request.url | match("png|jpg|PNG|JPG|jpeg|JPEG")) | "\(.request.url) \(.response._transferSize)"' ${IN})
+echo "IMAGES:          ${ALL_IMAGES}"
+
 ON_CONTENT_LOAD=$(jq '.log.pages[0].pageTimings.onContentLoad' ${IN})
 ON_LOAD=$(jq '.log.pages[0].pageTimings.onLoad' ${IN})
 COUNT=$(jq '[ .log.entries[] | select(.request.url | match("png|jpg|PNG|JPG|jpeg|JPEG")) ] | length' ${IN})
